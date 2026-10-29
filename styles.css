@@ -300,6 +300,10 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 @media (max-width: 640px) {
   :root { --fs-lead: 18px; --s8: 112px; }
   .case__media { aspect-ratio: 4 / 5; }
+  /* Видео Пятёрочки целиком, фон плитки совпадает с фоном видео */
+  .case__media--cover video { object-fit: contain; }
+  /* Дашборды: плитка ниже, чтобы фон не занимал половину экрана */
+  .case__media.case__media--shot { aspect-ratio: 4 / 3; }
   .case__media--contain video {
     width: 100%; height: auto; position: absolute; top: 50%; transform: translateY(-50%);
     -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
@@ -308,7 +312,7 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   .case:hover .case__media--contain video { transform: translateY(-50%); }
   .case__media--phones { padding: 0 3%; }
   .device { height: auto; width: 30.5%; }
-  .case__media--shot { padding: 8% 5%; }
+  .case__media--shot { padding: 5%; }
   .case__bar { flex-wrap: wrap; left: 8px; right: 8px; bottom: 8px; }
   .chip--ghost { display: none; }
   .block { padding: var(--s8) 0 0; }
@@ -317,6 +321,7 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   .bento { grid-template-columns: 1fr; }
   .bento figure[class*="span-"] { grid-column: auto; }
   .bento figure, .bento figure:not(.fit):not(.fill) { aspect-ratio: var(--nat); }
+  .bento .fill img, .bento .fill video { scale: var(--m-zoom, var(--zoom, 1)); }
   .photos { grid-template-columns: 1fr 1fr; margin-bottom: var(--s5); }
   .cols { grid-template-columns: 1fr; margin-left: 0; }
   .footer { padding-top: var(--s8); }
