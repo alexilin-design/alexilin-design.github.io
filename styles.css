@@ -140,10 +140,10 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 /* Рамка — настоящий мокап iPhone (PNG с прозрачным экраном), экран лежит под ней */
 .device {
   position: relative; height: 92%; flex: none; aspect-ratio: 1560 / 3240;
-  filter: drop-shadow(0 28px 28px rgba(0,0,0,.22));
   transition: transform 0.9s var(--ease);
 }
-.device__frame { position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; max-width: none; pointer-events: none; }
+/* Тень даёт сама рамка: фильтр на всём телефоне в iOS Safari рисует прямоугольник вокруг картинок */
+.device__frame { position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; max-width: none; pointer-events: none; filter: drop-shadow(0 28px 28px rgba(0,0,0,.22)); }
 /* Экран чуть больше выреза в рамке, чтобы края уходили под металл */
 .device__screen { position: absolute; left: 4.3%; top: 2.35%; width: 91.4%; height: 95.25%; border-radius: 16% / 7.45%; overflow: hidden; background: #000; container-type: inline-size; }
 .device__screen video, .device__screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
@@ -301,7 +301,10 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   :root { --fs-lead: 18px; --s8: 112px; }
   .case__media { aspect-ratio: 4 / 5; }
   /* Видео Пятёрочки целиком, фон плитки совпадает с фоном видео */
+  .case__media.case__media--cover { aspect-ratio: 1 / 1; }
   .case__media--cover video { object-fit: contain; }
+  /* Мокапы телефонов: квадратная плитка, снизу место под подписи */
+  .case__media.case__media--phones { aspect-ratio: 10 / 9; padding: 0 3% 12%; }
   /* Дашборды: плитка ниже, чтобы фон не занимал половину экрана */
   .case__media.case__media--shot { aspect-ratio: 4 / 3; }
   .case__media--contain video {
@@ -310,7 +313,6 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
     mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
   }
   .case:hover .case__media--contain video { transform: translateY(-50%); }
-  .case__media--phones { padding: 0 3%; }
   .device { height: auto; width: 30.5%; }
   .case__media--shot { padding: 5%; }
   .case__bar { flex-wrap: wrap; left: 8px; right: 8px; bottom: 8px; }
