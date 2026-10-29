@@ -1,0 +1,138 @@
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Плавное появление плиток и строк при скролле
+const revealIO = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("is-in");
+      revealIO.unobserve(e.target);
+    });
+  },
+  { rootMargin: "0px 0px -6% 0px", threshold: 0.05 }
+);
+document.querySelectorAll(".case, .bento figure, .row, .photos img, .cols p, .tools").forEach((el) => {
+  el.classList.add("reveal");
+  revealIO.observe(el);
+});
+// Первые плитки видны сразу
+requestAnimationFrame(() => document.querySelectorAll(".case").forEach((el) => {
+  if (el.getBoundingClientRect().top < innerHeight) el.classList.add("is-in");
+}));
+
+// Видео грузятся и играют только в зоне видимости
+const videoIO = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(({ target: v, isIntersecting }) => {
+      if (isIntersecting) {
+        if (!v.src) v.src = v.dataset.src;
+        if (!reduceMotion) v.play().catch(() => {});
+      } else if (!v.paused) {
+        v.pause();
+      }
+    });
+  },
+  { rootMargin: "200px 0px", threshold: 0.15 }
+);
+const watchVideos = (root) => root.querySelectorAll("video.lazy-video").forEach((v) => videoIO.observe(v));
+watchVideos(document);
+
+// Оглавление слева подсвечивает то, что сейчас в центре экрана
+const indexLinks = [...document.querySelectorAll(".intro [data-target]")];
+const indexIO = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      indexLinks.forEach((a) => a.classList.toggle("is-active", a.dataset.target === e.target.id));
+    });
+  },
+  { rootMargin: "-50% 0px -50% 0px" }
+);
+indexLinks.forEach((a) => {
+  const target = document.getElementById(a.dataset.target);
+  if (target) indexIO.observe(target);
+});
+
+// Живое демо Record Crate в рамке телефона
+const demo = document.getElementById("demo");
+const frame = demo.querySelector("iframe");
+const openDemo = (src) => {
+  // На телефоне рамка не нужна — открываем демо на весь экран
+  if (innerWidth < 640) return void window.open(src, "_blank", "noopener");
+  if (!frame.src) frame.src = src;
+  demo.showModal();
+};
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-demo]");
+  if (!btn) return;
+  e.stopPropagation();
+  openDemo(btn.dataset.demo);
+}, true);
+demo.querySelector(".demo__close").addEventListener("click", () => demo.close());
+demo.addEventListener("click", (e) => {
+  if (e.target === demo) demo.close();
+});
+
+// Карточка кейса: открывается по клику на плитку
+const cases = [...document.querySelectorAll(".case")];
+const sheet = document.getElementById("sheet");
+const sheetIndex = sheet.querySelector("[data-sheet-index]");
+const sheetMedia = sheet.querySelector("[data-sheet-media]");
+const sheetBody = sheet.querySelector("[data-sheet-body]");
+const [prevBtn, nextBtn] = sheet.querySelectorAll("[data-sheet-step]");
+let openIdx = -1;
+
+const fillSheet = (i) => {
+  openIdx = i;
+  const c = cases[i];
+  sheetIndex.textContent = `${c.dataset.index} / ${String(cases.length).padStart(2, "0")}`;
+  const media = c.querySelector(".case__media").cloneNode(true);
+  media.querySelectorAll("video").forEach((v) => v.removeAttribute("src"));
+  sheetMedia.replaceChildren(media);
+  watchVideos(sheetMedia);
+  sheetBody.innerHTML = c.querySelector(".case__about").innerHTML;
+  prevBtn.disabled = i === 0;
+  nextBtn.disabled = i === cases.length - 1;
+  sheet.querySelector(".sheet__panel").scrollTop = 0;
+};
+
+cases.forEach((c, i) => {
+  c.tabIndex = 0;
+  c.setAttribute("role", "button");
+  c.setAttribute("aria-label", `Открыть проект: ${c.querySelector(".case__about h2").textContent}`);
+  // Подсказка «Подробнее» появляется на плитке при наведении
+  const more = document.createElement("span");
+  more.className = "chip chip--more";
+  more.textContent = "Подробнее →";
+  const bar = c.querySelector(".case__bar");
+  bar.insertBefore(more, bar.querySelector(".chip--btn"));
+
+  const open = () => {
+    fillSheet(i);
+    sheet.showModal();
+  };
+  c.addEventListener("click", open);
+  c.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      open();
+    }
+  });
+});
+
+sheet.querySelector(".sheet__close").addEventListener("click", () => sheet.close());
+sheet.addEventListener("click", (e) => {
+  if (e.target === sheet) sheet.close();
+});
+sheet.addEventListener("close", () => {
+  sheetMedia.querySelectorAll("video").forEach((v) => v.pause());
+  cases[openIdx]?.focus({ preventScroll: true });
+});
+[prevBtn, nextBtn].forEach((btn) =>
+  btn.addEventListener("click", () => fillSheet(openIdx + Number(btn.dataset.sheetStep)))
+);
+document.addEventListener("keydown", (e) => {
+  if (!sheet.open) return;
+  if (e.key === "ArrowRight" && openIdx < cases.length - 1) fillSheet(openIdx + 1);
+  if (e.key === "ArrowLeft" && openIdx > 0) fillSheet(openIdx - 1);
+});
