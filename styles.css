@@ -60,18 +60,6 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 /* Разделы продолжают список работ: та же линия и размер текста */
 .sections { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); padding: var(--s3) 0 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--ink-2); }
 .sections a:hover, .sections a.is-active { color: var(--ink); }
-/* Тыква-фонарь в конце строки разделов: огонёк мерцает, при наведении тыква покачивается */
-.pumpkin { display: none; margin-left: auto; align-self: center; cursor: default; }
-.halloween .pumpkin { display: block; }
-.pumpkin svg { display: block; overflow: visible; filter: drop-shadow(0 3px 4px rgba(224,68,0,.35)); transform-origin: 50% 90%; }
-.pumpkin:hover svg { animation: pumpkinWobble 0.7s var(--ease); }
-.pumpkin__face { animation: candle 2.6s steps(1) infinite; }
-@keyframes candle {
-  0%, 100% { opacity: 1; } 12% { opacity: .75; } 15% { opacity: 1; } 47% { opacity: .85; }
-  50% { opacity: .55; } 53% { opacity: 1; } 78% { opacity: .9; }
-}
-@keyframes pumpkinWobble { 25% { rotate: -10deg; } 55% { rotate: 7deg; } 80% { rotate: -3deg; } }
-@media (prefers-reduced-motion: reduce) { .pumpkin__face { animation: none; } }
 
 /* Вертикальные отступы колонки растут с высотой экрана — без пустоты внизу */
 .profile { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(12px, 1.6vh, 24px); }
