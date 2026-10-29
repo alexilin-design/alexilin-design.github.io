@@ -30,6 +30,19 @@ requestAnimationFrame(() => document.querySelectorAll(".case").forEach((el) => {
   if (el.getBoundingClientRect().top < innerHeight) el.classList.add("is-in");
 }));
 
+// Сезонное украшение: тыква видна с 20 октября по 3 ноября
+const today = new Date();
+const isHalloween = (today.getMonth() === 9 && today.getDate() >= 20) || (today.getMonth() === 10 && today.getDate() <= 3);
+document.documentElement.classList.toggle("halloween", isHalloween);
+
+// Паучок повисает чуть выше заголовка, где бы тот ни оказался при текущей высоте экрана
+const spider = document.querySelector(".spider");
+const greeting = document.querySelector(".profile h1");
+const placeSpider = () => spider?.style.setProperty("--drop", `${greeting.offsetTop - 36 - 26}px`);
+placeSpider();
+addEventListener("resize", placeSpider);
+document.fonts?.ready.then(placeSpider);
+
 // Видео грузятся и играют только в зоне видимости
 const videoIO = new IntersectionObserver(
   (entries) => {

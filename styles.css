@@ -60,6 +60,18 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 /* Разделы продолжают список работ: та же линия и размер текста */
 .sections { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); padding: var(--s3) 0 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--ink-2); }
 .sections a:hover, .sections a.is-active { color: var(--ink); }
+/* Тыква-фонарь в конце строки разделов: огонёк мерцает, при наведении тыква покачивается */
+.pumpkin { display: none; margin-left: auto; align-self: center; cursor: default; }
+.halloween .pumpkin { display: block; }
+.pumpkin svg { display: block; overflow: visible; filter: drop-shadow(0 3px 4px rgba(224,68,0,.35)); transform-origin: 50% 90%; }
+.pumpkin:hover svg { animation: pumpkinWobble 0.7s var(--ease); }
+.pumpkin__face { animation: candle 2.6s steps(1) infinite; }
+@keyframes candle {
+  0%, 100% { opacity: 1; } 12% { opacity: .75; } 15% { opacity: 1; } 47% { opacity: .85; }
+  50% { opacity: .55; } 53% { opacity: 1; } 78% { opacity: .9; }
+}
+@keyframes pumpkinWobble { 25% { rotate: -10deg; } 55% { rotate: 7deg; } 80% { rotate: -3deg; } }
+@media (prefers-reduced-motion: reduce) { .pumpkin__face { animation: none; } }
 
 /* Вертикальные отступы колонки растут с высотой экрана — без пустоты внизу */
 .profile { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(12px, 1.6vh, 24px); }
@@ -280,6 +292,36 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 .demo__close { position: fixed; top: 14px; right: 14px; height: 38px; padding: 0 16px; border-radius: var(--r-sm); background: var(--ink); color: var(--paper); font-size: var(--fs-sm); }
 @keyframes fadeIn { from { opacity: 0; } }
 @keyframes phoneIn { from { opacity: 0; transform: translateY(30px); } }
+
+/* ---------- Паучок в левой колонке (только десктоп) ---------- */
+.spider {
+  position: absolute; z-index: 1; top: 0; left: 64%; width: 40px; pointer-events: none;
+  --drop: 130px; transform-origin: 20px 0;
+  animation: spiderSwing 16s 1s infinite;
+}
+.spider__drop { transform: translateY(-90px); animation: spiderDrop 16s 1s infinite; }
+.spider__thread { position: absolute; left: 50%; bottom: 69%; width: 1px; height: 800px; background: rgba(17,17,17,.35); }
+.spider__body { display: block; position: relative; }
+.spider__legs { transform-box: fill-box; transform-origin: center; animation: spiderLegs 0.5s ease-in-out infinite alternate; }
+@keyframes spiderDrop {
+  0% { transform: translateY(-90px); animation-timing-function: cubic-bezier(.3, .7, .4, 1); }
+  13% { transform: translateY(calc(var(--drop) + 10px)); animation-timing-function: ease-in-out; }
+  17% { transform: translateY(var(--drop)); }
+  52% { transform: translateY(var(--drop)); animation-timing-function: cubic-bezier(.5, 0, .7, .4); }
+  58% { transform: translateY(calc(var(--drop) + 6px)); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  70%, 100% { transform: translateY(-90px); }
+}
+@keyframes spiderSwing {
+  0%, 17% { rotate: 0deg; }
+  23% { rotate: 6deg; }
+  29% { rotate: -5deg; }
+  35% { rotate: 3.5deg; }
+  41% { rotate: -2.5deg; }
+  47% { rotate: 1.2deg; }
+  52%, 100% { rotate: 0deg; }
+}
+@keyframes spiderLegs { to { scale: 0.92 1.04; } }
+@media (max-width: 1024px), (prefers-reduced-motion: reduce) { .spider { display: none; } }
 
 /* ---------- Появление ---------- */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
