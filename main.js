@@ -1,5 +1,15 @@
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// Цели Яндекс Метрики: идентификаторы совпадают с целями, заведёнными в интерфейсе Метрики
+const goal = (name, params) => window.ym?.(113889488, "reachGoal", name, params);
+document.addEventListener("click", (e) => {
+  const href = e.target.closest("a[href]")?.getAttribute("href") || "";
+  if (href.startsWith("https://t.me/")) goal("telegram");
+  else if (href.includes("docs.google.com")) goal("resume");
+  else if (href.startsWith("mailto:")) goal("email");
+  else if (/behance\.net|dribbble\.com/.test(href)) goal("portfolio_link");
+});
+
 // Плавное появление плиток и строк при скролле
 const revealIO = new IntersectionObserver(
   (entries) => {
@@ -57,6 +67,7 @@ indexLinks.forEach((a) => {
 const demo = document.getElementById("demo");
 const frame = demo.querySelector("iframe");
 const openDemo = (src) => {
+  goal("demo");
   // На телефоне рамка не нужна — открываем демо на весь экран
   if (innerWidth < 640) return void window.open(src, "_blank", "noopener");
   if (!frame.src) frame.src = src;
@@ -110,6 +121,7 @@ cases.forEach((c, i) => {
   const open = () => {
     fillSheet(i);
     sheet.showModal();
+    goal("case_open", { case: c.querySelector(".case__about h2").textContent });
   };
   c.addEventListener("click", open);
   c.addEventListener("keydown", (e) => {
