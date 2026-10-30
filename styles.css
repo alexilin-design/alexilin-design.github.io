@@ -116,16 +116,15 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: var(--r);
   background: var(--bg, var(--paper-2)); isolation: isolate;
 }
-.case__media video, .case__media > img:not(.case__blur) { transition: transform 1.2s var(--ease); }
-.case:hover .case__media video, .case:hover .case__media > img:not(.case__blur) { transform: scale(1.025); }
+.case__media video, .case__media > img { transition: transform 1.2s var(--ease); }
+.case:hover .case__media video, .case:hover .case__media > img { transform: scale(1.025); }
 
-/* квадратное промо по центру, по бокам — размытая копия кадра */
+/* квадратное промо по центру, по бокам — фон плитки в цвет краёв видео */
 .case__media--contain video {
   position: relative; height: 100%; width: auto; margin: 0 auto; aspect-ratio: 1; object-fit: cover;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
 }
-.case__blur { position: absolute; inset: -10%; width: 120%; height: 120%; max-width: none; object-fit: cover; filter: blur(50px) saturate(1.2); opacity: 0.9; z-index: -1; }
 .case__media--cover video { width: 100%; height: 100%; object-fit: cover; }
 /* Дашборды целиком по центру плитки, без обрезки */
 .case__media--shot { display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; padding: 6% 8%; }
