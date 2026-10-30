@@ -109,7 +109,7 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 }
 
 /* ---------- Правая колонка ---------- */
-.work { padding: var(--gap); padding-left: 0; display: flex; flex-direction: column; gap: var(--gap); min-width: 0; }
+.work { padding: var(--gap); padding-left: 0; display: flex; flex-direction: column; gap: var(--s5); min-width: 0; }
 
 .case { position: relative; cursor: pointer; }
 .case__media {
@@ -169,17 +169,14 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   position: absolute; top: 12px; left: 12px; padding: 4px 9px; border-radius: var(--r-sm);
   background: var(--accent); color: #fff; font-family: var(--mono); text-transform: uppercase; font-size: var(--fs-xs); letter-spacing: 0.06em;
 }
-.case__bar { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; gap: var(--s1); align-items: center; pointer-events: none; }
-.chip {
-  pointer-events: auto; height: 34px; padding: 0 14px; display: inline-flex; align-items: center; gap: 10px;
-  border-radius: var(--r-sm); background: #fff; color: var(--ink); white-space: nowrap; font-size: var(--fs-sm); font-weight: 500;
-}
-.chip b { font-family: var(--mono); font-size: var(--fs-xs); font-weight: 400; color: var(--ink-3); }
-.chip--ghost { background: rgba(255,255,255,.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--ink-2); font-weight: 400; }
-.chip--btn { transition: background 0.2s, color 0.2s; }
-.chip--btn:hover { background: var(--ink); color: #fff; }
-.chip--more { margin-left: auto; opacity: 0; transform: translateY(4px); transition: opacity 0.3s, transform 0.4s var(--ease); }
-.case:hover .chip--more, .case:focus-visible .chip--more { opacity: 1; transform: none; }
+/* Подпись под плиткой, как в журнальной вёрстке: номер, название, тег справа */
+.case__cap { display: flex; align-items: baseline; gap: var(--s3); padding: 12px 2px 0; font-size: 15px; }
+.case__cap b { font-family: var(--mono); font-size: var(--fs-xs); font-weight: 400; color: var(--ink-3); transition: color 0.2s; }
+.case__title { font-weight: 500; }
+.case__tag { margin-left: auto; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; }
+.case:hover .case__cap b, .case:focus-visible .case__cap b { color: var(--accent); }
+.case__demo { align-self: center; height: 28px; padding: 0 12px; border-radius: var(--r-sm); background: var(--paper-2); font-size: var(--fs-sm); transition: background 0.2s, color 0.2s; }
+.case__demo:hover { background: var(--ink); color: var(--paper); }
 .case__about { display: none; }
 
 /* ---------- Карточка кейса (выезжает справа) ---------- */
@@ -335,16 +332,15 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   .sections { margin-top: var(--s4); }
   .contact { margin-top: var(--s5); padding-top: 0; }
   .work { padding: 0 var(--gap) var(--gap); }
-  .chip--more { opacity: 1; transform: none; }
 }
 @media (max-width: 640px) {
   :root { --fs-lead: 18px; --s8: 112px; }
   .case__media { aspect-ratio: 4 / 5; }
   /* Видео Пятёрочки целиком, фон плитки совпадает с фоном видео */
-  .case__media.case__media--cover { aspect-ratio: 1 / 1; }
+  .case__media.case__media--cover { aspect-ratio: 4 / 3; }
   .case__media--cover video { object-fit: contain; }
-  /* Мокапы телефонов: квадратная плитка, снизу место под подписи */
-  .case__media.case__media--phones { aspect-ratio: 10 / 9; padding: 0 3% 12%; }
+  /* Мокапы телефонов: подписи теперь под плиткой, воздух сверху и снизу одинаковый */
+  .case__media.case__media--phones { aspect-ratio: 10 / 7.8; padding: 0 3%; }
   /* Дашборды: плитка ниже, чтобы фон не занимал половину экрана */
   .case__media.case__media--shot { aspect-ratio: 4 / 3; }
   .case__media--contain video {
@@ -355,8 +351,8 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   .case:hover .case__media--contain video { transform: translateY(-50%); }
   .device { height: auto; width: 30.5%; }
   .case__media--shot { padding: 5%; }
-  .case__bar { flex-wrap: wrap; left: 8px; right: 8px; bottom: 8px; }
-  .chip--ghost { display: none; }
+  .case__cap { flex-wrap: wrap; row-gap: var(--s1); padding: 10px var(--s2) 0; }
+  .case__demo { order: 1; }
   .block { padding: var(--s8) 0 0; }
   .block__head, .rows, .tools, .cols, .footer { padding-left: var(--s2); padding-right: var(--s2); }
   .row { grid-template-columns: 1fr; gap: var(--s2); }

@@ -119,12 +119,6 @@ cases.forEach((c, i) => {
   c.tabIndex = 0;
   c.setAttribute("role", "button");
   c.setAttribute("aria-label", `Открыть проект: ${c.querySelector(".case__about h2").textContent}`);
-  // Подсказка «Подробнее» появляется на плитке при наведении
-  const more = document.createElement("span");
-  more.className = "chip chip--more";
-  more.textContent = "Подробнее";
-  const bar = c.querySelector(".case__bar");
-  bar.insertBefore(more, bar.querySelector(".chip--btn"));
 
   const open = () => {
     fillSheet(i);
