@@ -214,7 +214,7 @@ p, li { text-wrap: pretty; }
 .story__row { display: grid; grid-template-columns: 112px 1fr; gap: var(--s3); padding: var(--s3) 0; border-bottom: 1px solid var(--line); }
 .story__row h3 { padding-top: 4px; font-family: var(--mono); font-size: var(--fs-xs); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
 .sheet__body .story p { font-size: 16px; line-height: 1.55; max-width: 56ch; }
-.sheet__body .story p.story__num { margin-bottom: var(--s1); font-family: var(--display); font-weight: 500; font-size: clamp(36px, 4vw, 48px); line-height: 1; letter-spacing: -0.04em; color: var(--accent); }
+.sheet__body .story p.story__num { margin-bottom: var(--s1); font-family: var(--display); font-weight: 500; font-size: clamp(28px, 3vw, 36px); line-height: 1.1; letter-spacing: -0.04em; color: var(--ink); }
 @media (max-width: 640px) {
   .story__row { grid-template-columns: 1fr; gap: var(--s1); }
   .story__row h3 { padding-top: 0; }
