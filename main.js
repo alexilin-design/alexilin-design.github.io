@@ -65,26 +65,6 @@ document.addEventListener("pointerdown", (e) => {
   if (b) b.style.setProperty("--press", (1 - 6 / b.offsetWidth).toFixed(4));
 });
 
-// Список работ: одна подложка скользит за курсором от строки к строке
-const index = document.querySelector(".index");
-if (index && matchMedia("(hover: hover)").matches) {
-  const hl = document.createElement("span");
-  hl.className = "index__hl";
-  index.prepend(hl);
-  const moveTo = (a) => {
-    // Первое появление — сразу на месте, без проезда от прошлой строки
-    if (!index.classList.contains("is-hover")) {
-      hl.style.transition = "none";
-      requestAnimationFrame(() => (hl.style.transition = ""));
-    }
-    hl.style.transform = `translateY(${a.offsetTop}px)`;
-    hl.style.height = `${a.offsetHeight}px`;
-    index.classList.add("is-hover");
-  };
-  index.querySelectorAll("a").forEach((a) => a.addEventListener("mouseenter", () => moveTo(a)));
-  index.addEventListener("mouseleave", () => index.classList.remove("is-hover"));
-}
-
 // Видео грузятся и играют только в зоне видимости
 const videoIO = new IntersectionObserver(
   (entries) => {

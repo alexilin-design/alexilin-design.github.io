@@ -89,14 +89,6 @@ p, li { text-wrap: pretty; }
 .index > a span { font-size: 15px; transition: transform 0.35s var(--ease); }
 .index > a em { font-family: var(--mono); font-style: normal; font-size: var(--fs-xs); color: var(--ink-3); }
 .index > a:hover, .index > a.is-active { color: var(--ink); }
-/* Одна подложка скользит за курсором от строки к строке, а не мигает на каждой */
-.index { position: relative; isolation: isolate; }
-.index__hl {
-  position: absolute; z-index: -1; top: 0; left: -10px; right: -10px; border-radius: var(--r-sm);
-  background: var(--paper-2); opacity: 0; pointer-events: none;
-  transition: transform 0.16s var(--ease), height 0.16s var(--ease), opacity 0.12s;
-}
-.index.is-hover .index__hl { opacity: 1; }
 .index > a.is-active b { color: var(--accent); }
 .index > a.is-active span { transform: translateX(6px); }
 
