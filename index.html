@@ -13,7 +13,7 @@
   <link rel="icon" href="assets/favicon-64.png" sizes="64x64" type="image/png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="fonts.css">
-  <link rel="stylesheet" href="styles.css?v=57">
+  <link rel="stylesheet" href="styles.css?v=58">
   <!-- Яндекс Метрика: посещения, вебвизор и цели (Телеграм, резюме, кейсы, демо) -->
   <script>
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -58,9 +58,9 @@
       <nav class="index line--works" aria-label="Работы">
         <span class="eyebrow">Работы</span>
         <a href="#case-01" data-target="case-01"><b>01</b><span>Пятёрочка · игровой хаб</span><em class="is-new">новое</em></a>
-        <a href="#case-02" data-target="case-02"><b>02</b><span>Telegram · Коллекции</span><em class="is-new">новое</em></a>
-        <a href="#case-03" data-target="case-03"><b>03</b><span>Record Crate</span><em class="is-new">новое</em></a>
-        <a href="#case-04" data-target="case-04"><b>04</b><span>The Bina School</span><em>web</em></a>
+        <a href="#case-02" data-target="case-02"><b>02</b><span>The Bina School</span><em>web</em></a>
+        <a href="#case-03" data-target="case-03"><b>03</b><span>Telegram · Коллекции</span><em class="is-new">новое</em></a>
+        <a href="#case-04" data-target="case-04"><b>04</b><span>Record Crate</span><em class="is-new">новое</em></a>
         <a href="#case-05" data-target="case-05"><b>05</b><span>Nude Store</span><em>e-com</em></a>
         <a href="#case-06" data-target="case-06"><b>06</b><span>Rick.ai</span><em>b2b</em></a>
         <a href="#case-07" data-target="case-07"><b>07</b><span>Маркетплейс B2B/B2G</span><em>b2b</em></a>
@@ -103,13 +103,34 @@
         </div>
       </article>
 
-      <article class="case" id="case-02" data-index="02" style="--bg: linear-gradient(180deg, rgba(4,22,64,.5), rgba(4,22,64,0) 45%), linear-gradient(90deg, #154a97 19%, #5189d6 81%)">
+      <article class="case" id="case-02" data-index="02" style="--bg: linear-gradient(150deg,#c4dbff,#6f9cf0)">
+        <div class="case__media case__media--phones">
+          <div class="device"><div class="device__screen device__screen--rec"><img src="assets/work/bina-home.jpg" alt="Главная The Bina School"></div><img class="device__frame" src="assets/iphone-frame.png" alt="" aria-hidden="true"></div>
+          <div class="device"><div class="device__screen device__screen--rec"><video class="lazy-video" muted loop playsinline preload="none" poster="assets/work/bina-cards.jpg" data-src="assets/work/bina-cards.mp4"></video></div><img class="device__frame" src="assets/iphone-frame.png" alt="" aria-hidden="true"></div>
+          <div class="device"><div class="device__screen device__screen--rec device__screen--light"><video class="lazy-video" muted loop playsinline preload="none" poster="assets/work/bina-quiz.jpg" data-src="assets/work/bina-quiz.mp4"></video></div><img class="device__frame" src="assets/iphone-frame.png" alt="" aria-hidden="true"></div>
+        </div>
+        <div class="case__bar">
+          <span class="chip"><b>02</b> The Bina School</span>
+          <span class="chip chip--ghost">Сайт · Mobile</span>
+        </div>
+        <div class="case__about">
+          <h2>The Bina School</h2>
+          <p class="case__meta">Международная онлайн-школа · квиз записи на&nbsp;звонок</p>
+          <div class="story">
+            <div class="story__row"><h3>Проблема</h3><div><p>В&nbsp;квизе перед звонком с&nbsp;менеджером было около 20&nbsp;вопросов, а&nbsp;контакт и&nbsp;запись стояли в&nbsp;самом конце. Пользователь уставал раньше, чем становился лидом</p></div></div>
+            <div class="story__row"><h3>Решение</h3><div><p>Разобрал воронку по&nbsp;шагам и&nbsp;записи Вебвизора, нашёл три точки отвала. Сократил квиз с&nbsp;20&nbsp;вопросов до&nbsp;8, ценность показал в&nbsp;начале, к&nbsp;личным вопросам добавил «зачем спрашиваем», цену перенёс ближе к&nbsp;концу</p></div></div>
+            <div class="story__row"><h3>Итог</h3><div><p class="story__num">5% → 18%</p><p>Конверсия из&nbsp;квиза в&nbsp;запись на&nbsp;звонок. Отвал на&nbsp;первом экране снизился с&nbsp;32% до&nbsp;19%</p></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case" id="case-03" data-index="03" style="--bg: linear-gradient(180deg, rgba(4,22,64,.5), rgba(4,22,64,0) 45%), linear-gradient(90deg, #154a97 19%, #5189d6 81%)">
         <div class="case__media case__media--contain">
           <video class="lazy-video" muted loop playsinline preload="none" poster="assets/new/tg.jpg" data-src="assets/new/tg.mp4"></video>
           <span class="case__new">Новое</span>
         </div>
         <div class="case__bar">
-          <span class="chip"><b>02</b> Telegram · Коллекции</span>
+          <span class="chip"><b>03</b> Telegram · Коллекции</span>
           <span class="chip chip--ghost">Прототип на SwiftUI</span>
         </div>
         <div class="case__about">
@@ -123,13 +144,13 @@
         </div>
       </article>
 
-      <article class="case" id="case-03" data-index="03" style="--bg: linear-gradient(180deg, #030303, #0a0a0a 50%, #030303)">
+      <article class="case" id="case-04" data-index="04" style="--bg: linear-gradient(180deg, #030303, #0a0a0a 50%, #030303)">
         <div class="case__media case__media--contain">
           <video class="lazy-video" muted loop playsinline preload="none" poster="assets/new/crate.jpg" data-src="assets/new/crate.mp4"></video>
           <span class="case__new">Новое</span>
         </div>
         <div class="case__bar">
-          <span class="chip"><b>03</b> Record Crate</span>
+          <span class="chip"><b>04</b> Record Crate</span>
           <span class="chip chip--ghost">iOS · Web · 2026</span>
           <button class="chip chip--btn" data-demo="crate.html">Покрутить демо</button>
         </div>
@@ -142,27 +163,6 @@
             <div class="story__row"><h3>Итог</h3><div><p>Приложение работает на&nbsp;iOS и&nbsp;в&nbsp;вебе, демо можно покрутить прямо здесь</p></div></div>
           </div>
           <button class="sheet__btn" data-demo="crate.html">Покрутить демо</button>
-        </div>
-      </article>
-
-      <article class="case" id="case-04" data-index="04" style="--bg: linear-gradient(150deg,#c4dbff,#6f9cf0)">
-        <div class="case__media case__media--phones">
-          <div class="device"><div class="device__screen device__screen--rec"><img src="assets/work/bina-home.jpg" alt="Главная The Bina School"></div><img class="device__frame" src="assets/iphone-frame.png" alt="" aria-hidden="true"></div>
-          <div class="device"><div class="device__screen device__screen--rec"><video class="lazy-video" muted loop playsinline preload="none" poster="assets/work/bina-cards.jpg" data-src="assets/work/bina-cards.mp4"></video></div><img class="device__frame" src="assets/iphone-frame.png" alt="" aria-hidden="true"></div>
-          <div class="device"><div class="device__screen device__screen--rec device__screen--light"><video class="lazy-video" muted loop playsinline preload="none" poster="assets/work/bina-quiz.jpg" data-src="assets/work/bina-quiz.mp4"></video></div><img class="device__frame" src="assets/iphone-frame.png" alt="" aria-hidden="true"></div>
-        </div>
-        <div class="case__bar">
-          <span class="chip"><b>04</b> The Bina School</span>
-          <span class="chip chip--ghost">Сайт · Mobile</span>
-        </div>
-        <div class="case__about">
-          <h2>The Bina School</h2>
-          <p class="case__meta">Международная онлайн-школа · квиз записи на&nbsp;звонок</p>
-          <div class="story">
-            <div class="story__row"><h3>Проблема</h3><div><p>В&nbsp;квизе перед звонком с&nbsp;менеджером было около 20&nbsp;вопросов, а&nbsp;контакт и&nbsp;запись стояли в&nbsp;самом конце. Пользователь уставал раньше, чем становился лидом</p></div></div>
-            <div class="story__row"><h3>Решение</h3><div><p>Разобрал воронку по&nbsp;шагам и&nbsp;записи Вебвизора, нашёл три точки отвала. Сократил квиз с&nbsp;20&nbsp;вопросов до&nbsp;8, ценность показал в&nbsp;начале, к&nbsp;личным вопросам добавил «зачем спрашиваем», цену перенёс ближе к&nbsp;концу</p></div></div>
-            <div class="story__row"><h3>Итог</h3><div><p class="story__num">5% → 18%</p><p>Конверсия из&nbsp;квиза в&nbsp;запись на&nbsp;звонок. Отвал на&nbsp;первом экране снизился с&nbsp;32% до&nbsp;19%</p></div></div>
-          </div>
         </div>
       </article>
 
