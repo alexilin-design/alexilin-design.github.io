@@ -154,6 +154,8 @@ const fillSheet = (i) => {
   const c = cases[i];
   sheetIndex.textContent = `${c.dataset.index} / ${String(cases.length).padStart(2, "0")}`;
   const media = c.querySelector(".case__media").cloneNode(true);
+  // Фон плитки задан на самой статье — без него в карточке вместо фона пустота
+  media.style.setProperty("--bg", c.style.getPropertyValue("--bg"));
   media.querySelectorAll("video").forEach((v) => v.removeAttribute("src"));
   sheetMedia.replaceChildren(media);
   watchVideos(sheetMedia);
