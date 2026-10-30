@@ -209,6 +209,16 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 .sheet__body ul { list-style: none; padding: var(--s4) 0 0; margin-top: var(--s4); display: grid; gap: var(--s3); border-top: 1px solid var(--line); }
 .sheet__body li { position: relative; padding-left: 26px; font-size: 15px; color: var(--ink-2); }
 .sheet__body li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+/* Кейс в карточке: проблема → решение → итог; подпись слева, текст справа */
+.story { border-top: 1px solid var(--line); }
+.story__row { display: grid; grid-template-columns: 112px 1fr; gap: var(--s3); padding: var(--s3) 0; border-bottom: 1px solid var(--line); }
+.story__row h3 { padding-top: 4px; font-family: var(--mono); font-size: var(--fs-xs); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+.sheet__body .story p { font-size: 16px; line-height: 1.55; max-width: 56ch; }
+.sheet__body .story p.story__num { margin-bottom: var(--s1); font-family: var(--display); font-weight: 500; font-size: clamp(36px, 4vw, 48px); line-height: 1; letter-spacing: -0.04em; color: var(--accent); }
+@media (max-width: 640px) {
+  .story__row { grid-template-columns: 1fr; gap: var(--s1); }
+  .story__row h3 { padding-top: 0; }
+}
 .sheet__btn { margin-top: var(--s5); height: 44px; padding: 0 var(--s4); border-radius: var(--r-sm); background: var(--ink); color: var(--paper); font-weight: 500; transition: background 0.2s; }
 .sheet__btn:hover { background: var(--accent); }
 .sheet__nav { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1); }
