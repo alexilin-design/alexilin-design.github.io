@@ -13,10 +13,12 @@ document.addEventListener("click", (e) => {
 // Плавное появление плиток и строк при скролле
 const revealIO = new IntersectionObserver(
   (entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add("is-in");
-      revealIO.unobserve(e.target);
+    entries.filter((e) => e.isIntersecting).forEach((e, i) => {
+      const el = e.target;
+      el.style.transitionDelay = `${Math.min(i, 7) * 60}ms`;
+      el.addEventListener("transitionend", () => (el.style.transitionDelay = ""), { once: true });
+      el.classList.add("is-in");
+      revealIO.unobserve(el);
     });
   },
   { rootMargin: "0px 0px -6% 0px", threshold: 0.05 }
@@ -37,6 +39,51 @@ const placeSpider = () => spider?.style.setProperty("--drop", `${greeting.offset
 placeSpider();
 addEventListener("resize", placeSpider);
 document.fonts?.ready.then(placeSpider);
+
+// Диалоги закрываются тем же движением обратно, на ступень быстрее открытия
+const closeAnimated = (dialog) => {
+  if (!dialog.open || dialog.classList.contains("is-closing")) return;
+  dialog.classList.add("is-closing");
+  const onEnd = (e) => e.animationName.endsWith("Out") && done();
+  const done = () => {
+    clearTimeout(fallback);
+    dialog.removeEventListener("animationend", onEnd);
+    dialog.classList.remove("is-closing");
+    dialog.close();
+  };
+  const fallback = setTimeout(done, 400);
+  dialog.addEventListener("animationend", onEnd);
+};
+const closeOnEsc = (dialog) => dialog.addEventListener("cancel", (e) => {
+  e.preventDefault();
+  closeAnimated(dialog);
+});
+
+// Любая кнопка при нажатии проседает на одни и те же 3px, а не на долю своей ширины
+document.addEventListener("pointerdown", (e) => {
+  const b = e.target.closest(".btn, .sheet__btn, .sheet__nav button, .sheet__close, .chip--btn, .demo__close");
+  if (b) b.style.setProperty("--press", (1 - 6 / b.offsetWidth).toFixed(4));
+});
+
+// Список работ: одна подложка скользит за курсором от строки к строке
+const index = document.querySelector(".index");
+if (index && matchMedia("(hover: hover)").matches) {
+  const hl = document.createElement("span");
+  hl.className = "index__hl";
+  index.prepend(hl);
+  const moveTo = (a) => {
+    // Первое появление — сразу на месте, без проезда от прошлой строки
+    if (!index.classList.contains("is-hover")) {
+      hl.style.transition = "none";
+      requestAnimationFrame(() => (hl.style.transition = ""));
+    }
+    hl.style.transform = `translateY(${a.offsetTop}px)`;
+    hl.style.height = `${a.offsetHeight}px`;
+    index.classList.add("is-hover");
+  };
+  index.querySelectorAll("a").forEach((a) => a.addEventListener("mouseenter", () => moveTo(a)));
+  index.addEventListener("mouseleave", () => index.classList.remove("is-hover"));
+}
 
 // Видео грузятся и играют только в зоне видимости
 const videoIO = new IntersectionObserver(
@@ -87,10 +134,11 @@ document.addEventListener("click", (e) => {
   e.stopPropagation();
   openDemo(btn.dataset.demo);
 }, true);
-demo.querySelector(".demo__close").addEventListener("click", () => demo.close());
+demo.querySelector(".demo__close").addEventListener("click", () => closeAnimated(demo));
 demo.addEventListener("click", (e) => {
-  if (e.target === demo) demo.close();
+  if (e.target === demo) closeAnimated(demo);
 });
+closeOnEsc(demo);
 
 // Карточка кейса: открывается по клику на плитку
 const cases = [...document.querySelectorAll(".case")];
@@ -140,10 +188,11 @@ cases.forEach((c, i) => {
   });
 });
 
-sheet.querySelector(".sheet__close").addEventListener("click", () => sheet.close());
+sheet.querySelector(".sheet__close").addEventListener("click", () => closeAnimated(sheet));
 sheet.addEventListener("click", (e) => {
-  if (e.target === sheet) sheet.close();
+  if (e.target === sheet) closeAnimated(sheet);
 });
+closeOnEsc(sheet);
 sheet.addEventListener("close", () => {
   sheetMedia.querySelectorAll("video").forEach((v) => v.pause());
   cases[openIdx]?.focus({ preventScroll: true });

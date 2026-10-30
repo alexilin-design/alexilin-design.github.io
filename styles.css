@@ -27,6 +27,7 @@
   --fs-h1: clamp(22px, 1.85vw, 28px);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.55, 0, 0.75, 0.2);
   color-scheme: light;
 }
 
@@ -41,6 +42,8 @@ img, video { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; padding: 0; }
 h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
 ::selection { background: var(--accent); color: #fff; }
 
 .eyebrow { display: block; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
@@ -86,6 +89,14 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 .index > a span { font-size: 15px; transition: transform 0.35s var(--ease); }
 .index > a em { font-family: var(--mono); font-style: normal; font-size: var(--fs-xs); color: var(--ink-3); }
 .index > a:hover, .index > a.is-active { color: var(--ink); }
+/* Одна подложка скользит за курсором от строки к строке, а не мигает на каждой */
+.index { position: relative; isolation: isolate; }
+.index__hl {
+  position: absolute; z-index: -1; top: 0; left: -10px; right: -10px; border-radius: var(--r-sm);
+  background: var(--paper-2); opacity: 0; pointer-events: none;
+  transition: transform 0.16s var(--ease), height 0.16s var(--ease), opacity 0.12s;
+}
+.index.is-hover .index__hl { opacity: 1; }
 .index > a.is-active b { color: var(--accent); }
 .index > a.is-active span { transform: translateX(6px); }
 
@@ -97,7 +108,7 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   font-size: 15px; font-weight: 500; background: var(--paper-2); transition: background 0.2s, color 0.2s, transform 0.3s var(--ease);
 }
 .btn:hover { background: var(--ink); color: var(--paper); }
-.btn:active { transform: scale(0.97); }
+.btn:active, .sheet__btn:active, .sheet__nav button:active, .sheet__close:active, .chip--btn:active, .demo__close:active { transform: scale(var(--press, 0.97)); }
 .btn--primary { background: var(--ink); color: var(--paper); }
 .btn--primary:hover { background: var(--accent); color: #fff; }
 
@@ -170,7 +181,7 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 }
 .chip b { font-family: var(--mono); font-size: var(--fs-xs); font-weight: 400; color: var(--ink-3); }
 .chip--ghost { background: rgba(255,255,255,.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--ink-2); font-weight: 400; }
-.chip--btn { transition: background 0.2s, color 0.2s; }
+.chip--btn { transition: background 0.2s, color 0.2s, transform 0.3s var(--ease); }
 .chip--btn:hover { background: var(--ink); color: #fff; }
 .chip--more { margin-left: auto; opacity: 0; transform: translateY(4px); transition: opacity 0.3s, transform 0.4s var(--ease); }
 .case:hover .chip--more, .case:focus-visible .chip--more { opacity: 1; transform: none; }
@@ -182,9 +193,13 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   width: min(620px, 100vw); max-width: none; height: 100dvh; max-height: none;
 }
 .sheet::backdrop { background: rgba(20, 20, 19, 0.28); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
-.sheet[open] .sheet__panel { animation: sheetIn 0.55s var(--ease); }
+.sheet[open] .sheet__panel { animation: sheetIn 0.35s var(--ease); }
 .sheet[open]::backdrop { animation: fadeIn 0.3s var(--ease); }
+/* Закрытие на ступень быстрее открытия, тем же движением обратно */
+.sheet.is-closing .sheet__panel { animation: sheetOut 0.25s var(--ease-in) forwards; }
+.sheet.is-closing::backdrop { animation: fadeOut 0.25s var(--ease-in) forwards; }
 @keyframes sheetIn { from { transform: translateX(40px); opacity: 0; } }
+@keyframes sheetOut { to { transform: translateX(40px); opacity: 0; } }
 .sheet__panel {
   height: 100%; overflow-y: auto; background: var(--paper);
   display: flex; flex-direction: column; gap: var(--s4); padding: var(--s3);
@@ -192,7 +207,7 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 }
 .sheet__top { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: var(--fs-xs); color: var(--ink-2); }
 .sheet__top span::before { content: "● "; color: var(--accent); }
-.sheet__close { height: 34px; padding: 0 14px; border-radius: var(--r-sm); background: var(--paper-2); font-family: var(--sans); font-size: var(--fs-sm); transition: background 0.2s, color 0.2s; }
+.sheet__close { height: 34px; padding: 0 14px; border-radius: var(--r-sm); background: var(--paper-2); font-family: var(--sans); font-size: var(--fs-sm); transition: background 0.2s, color 0.2s, transform 0.3s var(--ease); }
 .sheet__close:hover { background: var(--ink); color: var(--paper); }
 .sheet__media .case__media { cursor: default; }
 .sheet__body { padding: 0 var(--s2); }
@@ -212,10 +227,10 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   .story__row { grid-template-columns: 1fr; gap: var(--s1); }
   .story__row h3 { padding-top: 0; }
 }
-.sheet__btn { margin-top: var(--s5); height: 44px; padding: 0 var(--s4); border-radius: var(--r-sm); background: var(--ink); color: var(--paper); font-weight: 500; transition: background 0.2s; }
+.sheet__btn { margin-top: var(--s5); height: 44px; padding: 0 var(--s4); border-radius: var(--r-sm); background: var(--ink); color: var(--paper); font-weight: 500; transition: background 0.2s, transform 0.3s var(--ease); }
 .sheet__btn:hover { background: var(--accent); }
 .sheet__nav { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1); }
-.sheet__nav button { height: 40px; border-radius: var(--r-sm); background: var(--paper-2); font-size: var(--fs-sm); transition: background 0.2s, color 0.2s; }
+.sheet__nav button { height: 44px; border-radius: var(--r-sm); background: var(--paper-2); font-size: var(--fs-sm); transition: background 0.2s, color 0.2s, transform 0.3s var(--ease); }
 .sheet__nav button:hover { background: var(--ink); color: var(--paper); }
 .sheet__nav button:disabled { opacity: 0.35; pointer-events: none; }
 
@@ -277,12 +292,17 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
   box-shadow: 0 0 0 9px #141413, 0 50px 100px -30px rgba(0,0,0,.45);
   animation: phoneIn 0.6s var(--ease);
 }
+.demo.is-closing { animation: fadeOut 0.25s var(--ease-in) forwards; }
+.demo.is-closing .demo__phone { animation: phoneOut 0.25s var(--ease-in) forwards; }
+.demo.is-closing::backdrop { animation: fadeOut 0.25s var(--ease-in) forwards; }
 .demo__phone iframe { width: 100%; height: 100%; border: 0; display: block; }
 .demo__hint { color: var(--ink-2); text-align: center; font-size: var(--fs-sm); }
 .demo__hint a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-.demo__close { position: fixed; top: 14px; right: 14px; height: 38px; padding: 0 16px; border-radius: var(--r-sm); background: var(--ink); color: var(--paper); font-size: var(--fs-sm); }
+.demo__close { position: fixed; top: 14px; right: 14px; height: 34px; padding: 0 14px; border-radius: var(--r-sm); background: var(--ink); color: var(--paper); font-size: var(--fs-sm); transition: transform 0.3s var(--ease); }
 @keyframes fadeIn { from { opacity: 0; } }
+@keyframes fadeOut { to { opacity: 0; } }
 @keyframes phoneIn { from { opacity: 0; transform: translateY(30px); } }
+@keyframes phoneOut { to { opacity: 0; transform: translateY(20px); } }
 
 /* ---------- Паучок в левой колонке (только десктоп) ---------- */
 .spider {
@@ -315,7 +335,9 @@ h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
 @media (max-width: 1024px), (prefers-reduced-motion: reduce) { .spider { display: none; } }
 
 /* ---------- Появление ---------- */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+.reveal { opacity: 0; transform: translateY(12px) scale(0.98); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+/* У фото свой переход для цвета — добавляем к нему появление */
+.photos img.reveal { transition: filter 0.5s, opacity 0.6s var(--ease), transform 0.6s var(--ease); }
 .reveal.is-in { opacity: 1; transform: none; }
 
 /* ---------- Адаптив ---------- */
