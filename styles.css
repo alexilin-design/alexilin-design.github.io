@@ -15,16 +15,15 @@
   --intro-top: var(--s5); /* верхнее поле левой колонки — по нему выравниваются разделы при переходе */
 
   /* шрифты и размеры */
-  --sans: "Onest", system-ui, -apple-system, sans-serif;
-  --display: "Unbounded", system-ui, sans-serif;
+  --sans: "Geologica", system-ui, -apple-system, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --fs-xs: 11px;   /* моно-подписи */
   --fs-sm: 14px;   /* вторичный текст */
   --fs: 16px;      /* основной */
   --fs-lead: 19px; /* лид */
   --fs-h3: 22px;
-  --fs-h2: clamp(30px, 3vw, 44px);
-  --fs-h1: clamp(22px, 1.85vw, 28px);
+  --fs-h2: clamp(34px, 3.4vw, 50px);
+  --fs-h1: clamp(26px, 2.2vw, 33px);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in: cubic-bezier(0.55, 0, 0.75, 0.2);
@@ -67,11 +66,11 @@ p, li { text-wrap: pretty; }
 /* Вертикальные отступы колонки растут с высотой экрана — без пустоты внизу */
 .profile { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(12px, 1.6vh, 24px); }
 .profile__photo { width: 96px; aspect-ratio: 4 / 5; height: auto; border-radius: var(--r-sm); object-fit: cover; object-position: 50% 30%; flex: none; }
-.profile h1 { font-family: var(--display); font-weight: 500; font-size: var(--fs-h1); line-height: 1.1; letter-spacing: -0.045em; }
+.profile h1 { font-weight: 500; font-size: var(--fs-h1); line-height: 1.1; letter-spacing: -0.04em; }
 .profile h1 span { color: var(--ink-3); }
 
 /* Первая строка лида подстраивается под ширину колонки, «в рабочих прототипах» — всегда со второй строки */
-.lead { margin-top: clamp(12px, 1.6vh, 24px); font-size: clamp(14px, calc((32vw - 56px) / 27), 17px); line-height: 1.45; }
+.lead { margin-top: clamp(12px, 1.6vh, 24px); font-size: clamp(13px, calc((32vw - 56px) / 28.5), 17px); line-height: 1.45; }
 
 
 /* Оглавление работ: подсвечивает то, что сейчас на экране */
@@ -204,7 +203,7 @@ p, li { text-wrap: pretty; }
 .sheet__close:hover { background: var(--ink); color: var(--paper); }
 .sheet__media .case__media { cursor: default; }
 .sheet__body { padding: 0 var(--s2); }
-.sheet__body h2 { font-family: var(--display); font-weight: 500; font-size: var(--fs-h2); line-height: 1.05; letter-spacing: -0.045em; }
+.sheet__body h2 { font-weight: 500; font-size: var(--fs-h2); line-height: 1.05; letter-spacing: -0.04em; }
 .sheet__body .case__meta { margin: var(--s2) 0 var(--s4); font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
 .sheet__body p { font-size: 17px; line-height: 1.55; max-width: 52ch; }
 .sheet__body ul { list-style: none; padding: var(--s4) 0 0; margin-top: var(--s4); display: grid; gap: var(--s3); border-top: 1px solid var(--line); }
@@ -215,7 +214,7 @@ p, li { text-wrap: pretty; }
 .story__row { display: grid; grid-template-columns: 112px 1fr; gap: var(--s3); padding: var(--s3) 0; border-bottom: 1px solid var(--line); }
 .story__row h3 { padding-top: 4px; font-family: var(--mono); font-size: var(--fs-xs); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
 .sheet__body .story p { font-size: 16px; line-height: 1.55; max-width: 56ch; }
-.sheet__body .story p.story__num { margin-bottom: var(--s1); font-family: var(--display); font-weight: 500; font-size: clamp(28px, 3vw, 36px); line-height: 1.1; letter-spacing: -0.04em; color: var(--ink); }
+.sheet__body .story p.story__num { margin-bottom: var(--s1); font-weight: 500; font-size: clamp(28px, 3vw, 36px); line-height: 1.1; letter-spacing: -0.04em; color: var(--ink); }
 @media (max-width: 640px) {
   .story__row { grid-template-columns: 1fr; gap: var(--s1); }
   .story__row h3 { padding-top: 0; }
@@ -234,7 +233,7 @@ p, li { text-wrap: pretty; }
 .block { scroll-margin-top: calc(var(--intro-top) - var(--s8)); }
 .block__head { margin-bottom: var(--s6); max-width: 720px; }
 .rows, .footer__row { margin-right: var(--s2); }
-.block__head h2 { margin-top: var(--s3); font-family: var(--display); font-weight: 500; font-size: var(--fs-h2); letter-spacing: -0.05em; line-height: 1.02; }
+.block__head h2 { margin-top: var(--s3); font-weight: 500; font-size: var(--fs-h2); letter-spacing: -0.04em; line-height: 1.02; }
 .block__head p { margin-top: var(--s3); font-size: var(--fs-lead); line-height: 1.45; color: var(--ink-2); max-width: 46ch; }
 
 /* Концепты: бенто на 6 колонок. Ведущий шот в ряду задаёт высоту,
@@ -254,7 +253,7 @@ p, li { text-wrap: pretty; }
 .rows { border-top: 1px solid var(--line); }
 .row { display: grid; grid-template-columns: 1fr 3fr; gap: var(--s4); padding: var(--s5) 0; border-bottom: 1px solid var(--line); }
 .row__date { font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); padding-top: 6px; }
-.row h3 { font-family: var(--display); font-weight: 500; font-size: var(--fs-h3); letter-spacing: -0.03em; margin-bottom: var(--s2); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.row h3 { font-weight: 500; font-size: var(--fs-h3); letter-spacing: -0.04em; margin-bottom: var(--s2); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .row p { max-width: 60ch; }
 .row .list { margin-top: var(--s3); color: var(--ink-2); font-size: var(--fs-sm); }
 .tag-now { font-family: var(--mono); font-style: normal; font-weight: 400; font-size: var(--fs-xs); letter-spacing: 0.04em; text-transform: uppercase; color: #fff; background: var(--accent); padding: 3px 8px; border-radius: var(--r-sm); }
