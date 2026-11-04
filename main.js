@@ -32,14 +32,6 @@ requestAnimationFrame(() => document.querySelectorAll(".case").forEach((el) => {
   if (el.getBoundingClientRect().top < innerHeight) el.classList.add("is-in");
 }));
 
-// Паучок повисает чуть выше заголовка, где бы тот ни оказался при текущей высоте экрана
-const spider = document.querySelector(".spider");
-const greeting = document.querySelector(".profile h1");
-const placeSpider = () => spider?.style.setProperty("--drop", `${greeting.offsetTop - 36 - 26}px`);
-placeSpider();
-addEventListener("resize", placeSpider);
-document.fonts?.ready.then(placeSpider);
-
 // Диалоги закрываются тем же движением обратно, на ступень быстрее открытия
 const closeAnimated = (dialog) => {
   if (!dialog.open || dialog.classList.contains("is-closing")) return;

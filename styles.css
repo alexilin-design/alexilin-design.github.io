@@ -76,9 +76,10 @@ p, li { text-wrap: pretty; }
 
 /* Оглавление работ: подсвечивает то, что сейчас на экране */
 .nav-block { flex: 1 0 auto; display: flex; flex-direction: column; }
-/* Строки работ растут с высотой экрана, но не больше 64px — дальше место уходит в отступ перед контактами */
-.index { margin-top: clamp(24px, 4vh, 56px); flex: 1 0 auto; max-height: 500px; display: flex; flex-direction: column; }
-.index .eyebrow { padding-bottom: var(--s2); }
+/* Строки работ растут с высотой экрана, но не больше 64px — дальше место уходит в отступ перед контактами.
+   Высота списка ровно 24px подписи и 7 строк по 64px: иначе под последней строкой остаётся лишний зазор */
+.index { margin-top: clamp(24px, 4vh, 56px); flex: 1 0 auto; max-height: calc(24px + 7 * 64px); display: flex; flex-direction: column; }
+.index .eyebrow { height: 24px; flex: none; }
 .index > a {
   display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: var(--s2);
   flex: 1 0 auto; max-height: 64px;
@@ -295,36 +296,6 @@ p, li { text-wrap: pretty; }
 @keyframes fadeOut { to { opacity: 0; } }
 @keyframes phoneIn { from { opacity: 0; transform: translateY(30px); } }
 @keyframes phoneOut { to { opacity: 0; transform: translateY(20px); } }
-
-/* ---------- Паучок в левой колонке (только десктоп) ---------- */
-.spider {
-  position: absolute; z-index: 1; top: 0; left: 64%; width: 40px; pointer-events: none;
-  --drop: 130px; transform-origin: 20px 0;
-  animation: spiderSwing 16s 1s infinite;
-}
-.spider__drop { transform: translateY(-90px); animation: spiderDrop 16s 1s infinite; }
-.spider__thread { position: absolute; left: 50%; bottom: 69%; width: 1px; height: 800px; background: rgba(17,17,17,.35); }
-.spider__body { display: block; position: relative; }
-.spider__legs { transform-box: fill-box; transform-origin: center; animation: spiderLegs 0.5s ease-in-out infinite alternate; }
-@keyframes spiderDrop {
-  0% { transform: translateY(-90px); animation-timing-function: cubic-bezier(.3, .7, .4, 1); }
-  13% { transform: translateY(calc(var(--drop) + 10px)); animation-timing-function: ease-in-out; }
-  17% { transform: translateY(var(--drop)); }
-  52% { transform: translateY(var(--drop)); animation-timing-function: cubic-bezier(.5, 0, .7, .4); }
-  58% { transform: translateY(calc(var(--drop) + 6px)); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-  70%, 100% { transform: translateY(-90px); }
-}
-@keyframes spiderSwing {
-  0%, 17% { rotate: 0deg; }
-  23% { rotate: 6deg; }
-  29% { rotate: -5deg; }
-  35% { rotate: 3.5deg; }
-  41% { rotate: -2.5deg; }
-  47% { rotate: 1.2deg; }
-  52%, 100% { rotate: 0deg; }
-}
-@keyframes spiderLegs { to { scale: 0.92 1.04; } }
-@media (max-width: 1024px), (prefers-reduced-motion: reduce) { .spider { display: none; } }
 
 /* ---------- Появление ---------- */
 .reveal { opacity: 0; transform: translateY(12px) scale(0.98); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
