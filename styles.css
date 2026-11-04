@@ -2,6 +2,7 @@
   --paper: #ffffff;
   --paper-2: #f3f3f3;
   --ink: #111111;
+  --btn: #2a2a2c; /* кнопка в покое светлее чёрного, чтобы при наведении уходить в чёрный */
   --ink-2: #6e6e73;
   --ink-3: #a1a1a6;
   --line: rgba(0, 0, 0, 0.08);
@@ -100,10 +101,9 @@ p, li { text-wrap: pretty; }
   height: 44px; display: grid; place-items: center; padding: 0 var(--s4); border-radius: var(--r-sm);
   font-size: 15px; font-weight: 500; background: var(--paper-2); transition: background 0.2s, color 0.2s, transform 0.3s var(--ease);
 }
-.btn:hover { background: var(--ink); color: var(--paper); }
+.btn:hover { background: #000; color: var(--paper); }
 .btn:active, .sheet__btn:active, .sheet__nav button:active, .sheet__close:active, .chip--btn:active, .demo__close:active { transform: scale(var(--press, 0.97)); }
-.btn--primary { background: var(--ink); color: var(--paper); }
-.btn--primary:hover { background: #333; color: #fff; }
+.btn--primary { background: var(--btn); color: var(--paper); }
 
 /* На невысоких экранах ужимаем поля колонки, чтобы кнопки помещались без скролла */
 @media (max-height: 960px) and (min-width: 1025px) {
@@ -230,13 +230,13 @@ p, li { text-wrap: pretty; }
 .story__row { display: grid; grid-template-columns: 112px 1fr; gap: var(--s3); padding: var(--s3) 0; border-bottom: 1px solid var(--line); }
 .story__row h3 { padding-top: 4px; font-family: var(--mono); font-size: var(--fs-xs); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
 .sheet__body .story p { font-size: 16px; line-height: 1.55; max-width: 56ch; }
-.sheet__body .story p.story__num { margin-bottom: var(--s1); font-weight: 600; font-size: clamp(28px, 3vw, 36px); line-height: 1.1; letter-spacing: -0.035em; color: var(--ink); }
+.sheet__body .story p.story__num { margin-bottom: var(--s1); font-weight: 600; font-variant-numeric: tabular-nums; font-size: clamp(28px, 3vw, 36px); line-height: 1.1; letter-spacing: -0.035em; color: var(--ink); }
 @media (max-width: 640px) {
   .story__row { grid-template-columns: 1fr; gap: var(--s1); }
   .story__row h3 { padding-top: 0; }
 }
-.sheet__btn { margin-top: var(--s5); height: 44px; padding: 0 var(--s4); border-radius: var(--r-sm); background: var(--ink); color: var(--paper); font-weight: 500; transition: background 0.2s, transform 0.3s var(--ease); }
-.sheet__btn:hover { background: #333; }
+.sheet__btn { margin-top: var(--s5); height: 44px; padding: 0 var(--s4); border-radius: var(--r-sm); background: var(--btn); color: var(--paper); font-weight: 500; transition: background 0.2s, transform 0.3s var(--ease); }
+.sheet__btn:hover { background: #000; }
 .sheet__nav { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1); }
 .sheet__nav button { height: 44px; border-radius: var(--r-sm); background: var(--paper-2); font-size: var(--fs-sm); transition: background 0.2s, color 0.2s, transform 0.3s var(--ease); }
 .sheet__nav button:hover { background: var(--ink); color: var(--paper); }

@@ -121,6 +121,28 @@ const sheetBody = sheet.querySelector("[data-sheet-body]");
 const [prevBtn, nextBtn] = sheet.querySelectorAll("[data-sheet-step]");
 let openIdx = -1;
 
+// Итог в карточке считается от начальной цифры до конечной, когда попадает на экран
+const countUp = (el) => {
+  const match = el?.textContent.match(/^(\d+)% → (\d+)%$/);
+  if (!match || reduceMotion) return;
+  const [from, to] = [Number(match[1]), Number(match[2])];
+  const show = (n) => (el.textContent = `${from}% → ${n}%`);
+  const io = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    io.disconnect();
+    show(from);
+    const start = performance.now() + 250;
+    const tick = (now) => {
+      if (!el.isConnected) return;
+      const t = Math.min(Math.max((now - start) / 1000, 0), 1);
+      show(Math.round(from + (to - from) * (1 - (1 - t) ** 3)));
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, { threshold: 0.6 });
+  io.observe(el);
+};
+
 const fillSheet = (i) => {
   openIdx = i;
   const c = cases[i];
@@ -135,6 +157,7 @@ const fillSheet = (i) => {
   prevBtn.disabled = i === 0;
   nextBtn.disabled = i === cases.length - 1;
   sheet.querySelector(".sheet__panel").scrollTop = 0;
+  countUp(sheetBody.querySelector(".story__num"));
 };
 
 cases.forEach((c, i) => {
