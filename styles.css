@@ -316,6 +316,20 @@ p, li { text-wrap: pretty; }
 @keyframes phoneIn { from { opacity: 0; transform: translateY(30px); } }
 @keyframes phoneOut { to { opacity: 0; transform: translateY(20px); } }
 
+/* ---------- Листья при заходе ---------- */
+.leaves { position: fixed; inset: 0; z-index: 20; overflow: hidden; pointer-events: none; }
+.leaves i { position: absolute; top: -40px; animation: leafFall var(--dur) linear var(--delay) both; }
+.leaves svg { display: block; width: 100%; animation: leafSway 2.6s ease-in-out infinite alternate; }
+@keyframes leafFall {
+  from { transform: translateY(0); opacity: 0; }
+  6%, 80% { opacity: 1; }
+  to { transform: translateY(calc(100vh + 80px)); opacity: 0; }
+}
+@keyframes leafSway {
+  from { transform: translateX(calc(var(--sway) * -1)) rotate(calc(var(--spin) * -1)); }
+  to { transform: translateX(var(--sway)) rotate(var(--spin)); }
+}
+
 /* ---------- Появление ---------- */
 .reveal { opacity: 0; transform: translateY(12px) scale(0.98); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
 /* У фото свой переход для цвета — добавляем к нему появление */

@@ -202,3 +202,24 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight" && openIdx < cases.length - 1) fillSheet(openIdx + 1);
   if (e.key === "ArrowLeft" && openIdx > 0) fillSheet(openIdx - 1);
 });
+
+// Осенью при заходе в левой колонке падает немного листьев, потом слой удаляется. Кейсы справа остаются чистыми
+const fallLeaves = () => {
+  const month = new Date().getMonth();
+  if (reduceMotion || month < 8 || month > 10) return;
+  const leaves = document.createElement("div");
+  leaves.className = "leaves";
+  leaves.setAttribute("aria-hidden", "true");
+  const colors = ["#c9772b", "#d9a441", "#a8502a", "#b98a3e"];
+  const rnd = (min, max) => min + Math.random() * (max - min);
+  const side = document.querySelector(".intro").offsetWidth;
+  for (let i = 0; i < (innerWidth < 640 ? 6 : 9); i++) {
+    const leaf = document.createElement("i");
+    leaf.innerHTML = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5 4 8 9 7 14-1 3-3 5-7 6-4-1-6-3-7-6-1-5 2-10 7-14z"/><path d="M12 7v16" stroke="rgba(0,0,0,.2)"/></svg>';
+    leaf.style.cssText = `left:${rnd(30, side - 70)}px;width:${rnd(24, 40)}px;color:${colors[i % colors.length]};--dur:${rnd(6, 9)}s;--delay:${rnd(0, 2.5)}s;--sway:${rnd(10, 26)}px;--spin:${rnd(25, 60)}deg`;
+    leaves.append(leaf);
+  }
+  document.body.append(leaves);
+  setTimeout(() => leaves.remove(), 12000);
+};
+fallLeaves();
