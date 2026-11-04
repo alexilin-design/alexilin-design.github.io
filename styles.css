@@ -183,11 +183,14 @@ p, li { text-wrap: pretty; }
 .chip--more { margin-left: auto; opacity: 0; transform: translateY(4px); transition: opacity 0.3s, transform 0.4s var(--ease); }
 .case:hover .chip--more, .case:focus-visible .chip--more { opacity: 1; transform: none; }
 .case__about { display: none; }
-/* Плашки не наезжают на телефоны: снизу плитки оставлено место под них, у Пятёрочки видео поднято, у Telegram плашки стоят столбиком слева от телефона */
+/* Плашки не наезжают на телефоны: снизу плитки оставлено место под них, у Пятёрочки видео поднято */
 @media (min-width: 641px) {
   .case > .case__media--phones { padding: var(--s3) 0 calc(var(--s3) * 2 + 34px); }
   .case > .case__media--phones .device { height: 100%; }
   #case-01 .case__media video { scale: 0.92; transform-origin: 50% 0; }
+}
+/* У Telegram телефон крупный: ряд плашек помещается слева от него только на широком экране, иначе столбик */
+@media (min-width: 641px) and (max-width: 1699px) {
   #case-02 .case__bar { flex-direction: column; align-items: flex-start; }
   #case-02 .chip--more { position: absolute; right: 0; bottom: 0; }
 }
