@@ -2,7 +2,7 @@
   --paper: #ffffff;
   --paper-2: #f3f3f3;
   --ink: #111111;
-  --btn: #1c1c1e; /* кнопка в покое чуть светлее чёрного, чтобы при наведении уходить в чёрный */
+  --btn: #000000;
   --ink-2: #6e6e73;
   --ink-3: #a1a1a6;
   --line: rgba(0, 0, 0, 0.08);
@@ -99,11 +99,20 @@ p, li { text-wrap: pretty; }
 /* Явный отступ отделяет навигацию от контактов */
 .contact { margin-top: clamp(40px, 7vh, 80px); }
 .actions { display: grid; grid-template-columns: 1fr auto; gap: var(--s1); }
-.btn {
-  height: 44px; display: grid; place-items: center; padding: 0 var(--s4); border-radius: var(--r-sm);
-  font-size: 15px; font-weight: 500; background: var(--paper-2); transition: background 0.2s, color 0.2s, transform 0.3s var(--ease);
+.btn, .sheet__btn {
+  height: 44px; padding: 0 var(--s4); border-radius: 0;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: transform 0.3s var(--ease);
 }
-.btn:hover { background: #000; color: var(--paper); }
+.btn { display: grid; place-items: center; background: var(--paper-2); }
+
+/* Текст кнопки уезжает вверх, такой же приходит снизу */
+.roll { display: block; overflow: hidden; line-height: 20px; white-space: nowrap; }
+.roll > span { display: block; position: relative; transition: transform 0.45s var(--ease); }
+.roll > span::after { content: attr(data-text); content: attr(data-text) / ""; position: absolute; top: 100%; left: 0; right: 0; }
+@media (hover: hover) {
+  .btn:hover .roll > span, .sheet__btn:hover .roll > span { transform: translateY(-100%); }
+}
 .btn:active, .sheet__btn:active, .sheet__nav button:active, .sheet__close:active, .chip--btn:active, .demo__close:active { transform: scale(var(--press, 0.97)); }
 .btn--primary { background: var(--btn); color: var(--paper); }
 
@@ -237,8 +246,7 @@ p, li { text-wrap: pretty; }
   .story__row { grid-template-columns: 1fr; gap: var(--s1); }
   .story__row h3 { padding-top: 0; }
 }
-.sheet__btn { margin-top: var(--s5); height: 44px; padding: 0 var(--s4); border-radius: var(--r-sm); background: var(--btn); color: var(--paper); font-weight: 500; transition: background 0.2s, transform 0.3s var(--ease); }
-.sheet__btn:hover { background: #000; }
+.sheet__btn { margin-top: var(--s5); background: var(--btn); color: var(--paper); }
 .sheet__nav { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1); }
 .sheet__nav button { height: 44px; border-radius: var(--r-sm); background: var(--paper-2); font-size: var(--fs-sm); transition: background 0.2s, color 0.2s, transform 0.3s var(--ease); }
 .sheet__nav button:hover { background: var(--ink); color: var(--paper); }
