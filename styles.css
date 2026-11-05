@@ -106,22 +106,17 @@ p, li { text-wrap: pretty; }
 }
 .btn { display: grid; align-items: center; justify-items: center; background: var(--paper-2); }
 
-/* Строка с текстом и стрелкой уезжает вверх, такая же приходит снизу */
+/* Текст уезжает вверх, такой же приходит снизу */
 .roll { display: block; height: 28px; overflow: hidden; white-space: nowrap; }
-.roll__line { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); height: 28px; will-change: transform; transition: transform 0.2s ease-out; }
-.roll svg { width: 20px; height: 20px; flex: none; }
+.roll__line { display: flex; align-items: center; justify-content: center; height: 28px; will-change: transform; transition: transform 0.2s ease-out; }
 @media (hover: hover) {
   .btn:hover .roll__line, .sheet__btn:hover .roll__line { transform: translateY(-100%); }
 }
 @media (max-width: 400px) {
   .actions .btn { padding: 0 12px; }
-  .roll__line { gap: var(--s2); }
-}
-@media (max-width: 340px) {
-  .actions .roll svg { display: none; }
 }
 .btn:active, .sheet__btn:active, .sheet__nav button:active, .sheet__close:active, .chip--btn:active, .demo__close:active { transform: scale(var(--press, 0.97)); }
-.btn--primary { justify-items: stretch; background: var(--btn); color: var(--paper); }
+.btn--primary { background: var(--btn); color: var(--paper); }
 
 /* На невысоких экранах ужимаем поля колонки, чтобы кнопки помещались без скролла */
 @media (max-height: 960px) and (min-width: 1025px) {
