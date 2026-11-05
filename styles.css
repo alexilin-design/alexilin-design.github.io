@@ -100,25 +100,28 @@ p, li { text-wrap: pretty; }
 .contact { margin-top: clamp(40px, 7vh, 80px); }
 .actions { display: grid; grid-template-columns: 1fr auto; gap: var(--s1); }
 .btn, .sheet__btn {
-  height: 44px; padding: 0 var(--s4); border-radius: 0;
-  font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  height: 52px; padding: 0 var(--s3); border-radius: 0;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
   transition: transform 0.3s var(--ease);
 }
-.btn { display: grid; place-items: center; background: var(--paper-2); }
+.btn { display: grid; align-items: center; justify-items: center; background: var(--paper-2); }
 
-/* Текст кнопки уезжает вверх, такой же приходит снизу */
-.roll {
-  display: block; overflow: hidden; line-height: 28px; white-space: nowrap;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
-}
-.roll > span { display: block; position: relative; will-change: transform; transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
-.roll > span::after { content: attr(data-text); content: attr(data-text) / ""; position: absolute; top: 100%; left: 0; right: 0; }
+/* Строка с текстом и стрелкой уезжает вверх, такая же приходит снизу */
+.roll { display: block; height: 28px; overflow: hidden; white-space: nowrap; }
+.roll__line { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); height: 28px; will-change: transform; transition: transform 0.2s ease-out; }
+.roll svg { width: 20px; height: 20px; flex: none; }
 @media (hover: hover) {
-  .btn:hover .roll > span, .sheet__btn:hover .roll > span { transform: translateY(-100%); }
+  .btn:hover .roll__line, .sheet__btn:hover .roll__line { transform: translateY(-100%); }
+}
+@media (max-width: 400px) {
+  .actions .btn { padding: 0 12px; }
+  .roll__line { gap: var(--s2); }
+}
+@media (max-width: 340px) {
+  .actions .roll svg { display: none; }
 }
 .btn:active, .sheet__btn:active, .sheet__nav button:active, .sheet__close:active, .chip--btn:active, .demo__close:active { transform: scale(var(--press, 0.97)); }
-.btn--primary { background: var(--btn); color: var(--paper); }
+.btn--primary { justify-items: stretch; background: var(--btn); color: var(--paper); }
 
 /* На невысоких экранах ужимаем поля колонки, чтобы кнопки помещались без скролла */
 @media (max-height: 960px) and (min-width: 1025px) {
