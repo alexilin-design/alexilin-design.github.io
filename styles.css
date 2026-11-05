@@ -4,7 +4,7 @@
   --ink: #111111;
   --btn: #000000;
   --ink-2: #6e6e73;
-  --ink-3: #a1a1a6;
+  --ink-3: #6e6e73;
   --line: rgba(0, 0, 0, 0.08);
   --accent: #ff4f00;
 
@@ -69,7 +69,7 @@ p, li { text-wrap: pretty; }
 .profile__photo { width: 96px; aspect-ratio: 4 / 5; height: auto; border-radius: var(--r-sm); object-fit: cover; object-position: 50% 30%; flex: none; }
 /* Размер ограничен шириной колонки: имя занимает 11.7em и должно влезать в одну строку */
 .profile h1 { font-weight: 600; font-size: min(var(--fs-h1), calc((max(360px, 32vw) - 56px) / 11.7)); line-height: 1.1; letter-spacing: -0.035em; }
-.profile h1 span { color: var(--ink-3); }
+.profile h1 span { color: #86868b; }
 /* После запятой пробел выглядит шире обычного: хвост запятой оставляет лишний просвет */
 .profile h1 i { font-style: normal; margin-right: -0.11em; }
 
@@ -392,6 +392,11 @@ p, li { text-wrap: pretty; }
   .cols { grid-template-columns: 1fr; }
   .footer { padding-top: var(--s8); }
   .footer__cta { display: grid; margin-bottom: var(--s5); }
+}
+
+/* На телефоне подписи не мельче 12px */
+@media (max-width: 640px) {
+  :root { --fs-xs: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

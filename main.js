@@ -71,7 +71,22 @@ const videoIO = new IntersectionObserver(
   },
   { rootMargin: "200px 0px", threshold: 0.15 }
 );
-const watchVideos = (root) => root.querySelectorAll("video.lazy-video").forEach((v) => videoIO.observe(v));
+// Обложки подгружаются заранее, примерно за два экрана до показа
+const posterIO = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(({ target: v, isIntersecting }) => {
+      if (!isIntersecting) return;
+      v.poster = v.dataset.poster;
+      posterIO.unobserve(v);
+    });
+  },
+  { rootMargin: "1600px 0px" }
+);
+const watchVideos = (root) =>
+  root.querySelectorAll("video.lazy-video").forEach((v) => {
+    videoIO.observe(v);
+    if (v.dataset.poster && !v.poster) posterIO.observe(v);
+  });
 watchVideos(document);
 
 // Оглавление слева подсвечивает то, что сейчас в центре экрана
